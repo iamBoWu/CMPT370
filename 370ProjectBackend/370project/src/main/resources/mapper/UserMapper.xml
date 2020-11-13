@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sms.boot.mapper.UserMapper">
+
+	<select id= "queryUser"  parameterType="com.sms.boot.pojo.User"  resultType="com.sms.boot.pojo.User" > 
+		select * FROM user WHERE user_name=#{u.userName} AND password=#{u.password}  AND is_del=0
+	</select>
+	
+	<insert id="addUser" parameterType="com.sms.boot.pojo.User">
+		insert into user(user_name, password, user_firstname, user_lastname, user_email, user_age, user_role) VALUES (#{u.userName}, #{u.password}, #{u.userFirstname}, #{u.userLastname}, #{u.userEmail}, #{u.userAge}, #{u.userRole})
+	</insert>
+	
+	<update id="updateUser"  parameterType="com.sms.boot.pojo.User" >
+		  UPDATE user SET user_name=#{u.userName}, password=#{u.password}, user_firstname=#{u.userFirstname}, user_lastname=#{u.userLastname}, user_email=#{u.userEmail}, user_age=#{u.userAge}, user_role=#{u.userRole}  WHERE user_id=#{u.userId}
+	 </update>
+	
+</mapper>

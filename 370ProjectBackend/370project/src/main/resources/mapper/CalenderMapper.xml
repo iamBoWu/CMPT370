@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sms.boot.mapper.CalenderMapper">
+	
+	<select id="queryAllEventsById" 	parameterType="int" resultType="com.sms.boot.pojo.Event"  >
+		select * from event where user_id = #{id} and is_del = 0
+	</select>
+	
+	<select id="querySearchEvents" 	parameterType="com.sms.boot.pojo.Event" resultType="com.sms.boot.pojo.Event"  >
+		select * from event where user_id = #{e.userId} and is_del = 0 and event_title like CONCAT('%',#{e.eventTitle},'%')
+	</select>
+	
+	<select id="queryAllEventsByPriority" 	parameterType="int" resultType="com.sms.boot.pojo.Event"  >
+		select * from event where user_id = #{id} and is_del = 0 order by priority asc
+	</select>
+	
+	<select id="queryAllEventsByStartTime" 	parameterType="int" resultType="com.sms.boot.pojo.Event"  >
+		select * from event where user_id = #{id} and is_del = 0 order by start_time asc
+	</select>
+	
+	<select id="queryAllEventsByEndTime" 	parameterType="int" resultType="com.sms.boot.pojo.Event"  >
+		select * from event where user_id = #{id} and is_del = 0 order by end_time asc
+	</select>
+	
+</mapper>

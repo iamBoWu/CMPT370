@@ -1,0 +1,22 @@
+package com.sms.boot.service;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sms.boot.mapper.LoginMapper;
+import com.sms.boot.pojo.User;
+
+@Service
+public class LoginService extends ServiceImpl<LoginMapper, User>{
+	
+	@Autowired
+	LoginMapper loginMapper;
+	
+	public User getUser(User user) {
+		User user = loginMapper.queryUser(user);
+		return user;
+	}
+	
+}

@@ -1,0 +1,26 @@
+package com.sms.boot.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sms.boot.mapper.CalenderMapper;
+import com.sms.boot.pojo.Event;
+
+@Service
+public class CalenderService extends ServiceImpl<CalenderMapper, Event>{
+	
+	@Autowired
+	CalenderMapper calendermapper;
+	
+	public List<Event> getAllEventsById(Integer id){
+		List<Event> events = calendermapper.queryAllEventsById(id);
+		return events;
+	}
+	
+	public void deleteEvent(Integer eventId) {
+		calendermapper.deleteById(eventId);
+	}
+}

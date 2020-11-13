@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sms.boot.mapper.ShareMapper">
+	
+	<insert id="addShare" parameterType="com.sms.boot.pojo.Share">
+		insert into share(share_user_id, event_id) VALUES (#{s.shareUserId}, #{s.eventId})
+	</insert>
+	
+	<select id="queryAllShareEvents" parameterType="int" resultType="com.sms.boot.pojo.EventForm"  >
+		select * from event,user where event_id in (select event_id from share where share_user_id = #{id} and is_del = 0) 
+		and event.is_del = 0 and user.user_id = event.user_id;
+	</select>
+	
+	<update id="deleteShare" parameterType="com.sms.boot.pojo.Share">
+		UPDATE share SET is_del=1 WHERE share_user_id=#{s.shareUserId} and event_id=#{s.eventId}
+	</update>
+	
+	
+</mapper>

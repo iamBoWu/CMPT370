@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>addevent</title>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" ></script>
+    
+	  <script th:inline="javascript">
+	    var eventid = [[${session.EventId}]];
+	    
+	    function submitAdd(){
+	    	var req = {};
+	    	req.userId = $('#userId').val().trim();
+	    	req.eventTitle = $('#eventTitle').val().trim();
+	    	req.note = $('#note').val().trim();
+	    	req.priority = $('#priority').val().trim();
+	    	
+	    	$.ajax({
+	    		  type: "POST",
+	    		  url: "/event/addevent",
+	    		  data: JSON.stringify(req),
+	    		  success: function(){
+	    			  back();
+	    		  },
+	    		  contentType : "application/json"
+	    		});
+	    }
+	    
+	    
+	    function back(){
+	    	location.href = "/calender/";
+	    }
+	    
+	    </script>
+	    
+</head>
+<body>
+				<h1>This is add page</h1>
+	
+
+	            	<p1>userId: </p1>
+               		<input id="userId" name="userId"  type="text"  th:value="${session.UserId}"  readonly="readonly"><br>
+               		<p1 >Title: </p1>
+               		<input id="eventTitle"  name="eventTitle"  type="text"  required><br>
+					  <textarea id="note" name="note" placeholder="put note here" rows="10" cols="30" required></textarea>
+					  <br><br>
+               		<p1>priority: </p1>
+					  <select id="priority" name="priority">
+					    <option value="0">0</option>
+					    <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					  </select><br>
+					 <p1>startTime: </p1><br>
+					 <input type=”date” />
+					  
+               <button  onclick="submitAdd()">add</button>
+               
+               <button onclick="back()" class="button"> Back</button>
+               
+</body>
+</html>

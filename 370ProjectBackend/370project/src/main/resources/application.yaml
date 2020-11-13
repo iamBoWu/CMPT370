@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  
+      
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/370project?serverTimezone=UTC
+    username: root
+    password: 1L0V3meaT.
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+  thymeleaf:
+    cache: false
+    
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: flag 
+      logic-delete-value: 1 
+      logic-not-delete-value: 0 

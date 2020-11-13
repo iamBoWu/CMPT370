@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>updateEvent</title>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" ></script>
+    
+        	<script th:inline="javascript">
+	    var eventid = [[${session.EventId}]];
+	    
+	    <form action="/event/updateEvent"  th:method="POST">
+	    
+	    
+	    
+	    function back(){
+	    	location.href = "/calender/eventcheck/" + eventid;
+	    }
+	    
+	    </script>
+    
+    
+</head>
+<body>
+					<h1>This is update page</h1>
+	
+	            	<input type="hidden" name="_method" value="put" >
+	            	<label for="eventId">eventId: </label>
+               		<input name="eventId"  type="text"  th:value="${session.EventId}"  readonly="readonly"><br>
+	            	<label for="userId">userId: </label>
+               		<input name="userId"  type="text"  th:value="${session.UserId}"  readonly="readonly"><br>
+               		<label for="eventTitle">Title: </label>
+               		<input name="eventTitle"  type="text"   required><br>
+					  <textarea name="note" placeholder="put note here" rows="10" cols="30" required></textarea>
+					  <br><br>
+               		<label for="priority">priority: </label>
+					  <select id="cars" name="priority" >
+					    <option value="0">0</option>
+					    <option value="1">1</option>
+					    <option value="2">2</option>
+					    <option value="3">3</option>
+					  </select><br>
+               		<input type="submit"  value="update">
+
+               <button  onclick="submitupdate()">update</button>
+               
+               <button onclick="back()" class="button"> Back</button>
+</body>
+</html>

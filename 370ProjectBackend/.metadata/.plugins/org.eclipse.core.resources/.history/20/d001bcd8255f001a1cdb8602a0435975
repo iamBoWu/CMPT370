@@ -1,0 +1,96 @@
+package com.sms.boot;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.WebApplicationContext;
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(classes={Application.class})
+@WebAppConfiguration
+class EventControllerTest {
+
+    @Autowired
+    private WebApplicationContext wac;
+
+    private MockMvc mvc;
+    private MockHttpSession session;
+    
+    @BeforeEach
+    public void setupMockMvc(){
+        mvc = MockMvcBuilders.webAppContextSetup(wac).build();
+    }
+    
+	@Test
+	  public void addEvent() throws Exception {
+			String json="{\"userId\":1,\"eventTitle\":\"TitileTest1\",\"note\":\"NoteTest1\",\"priority\":1}";
+	      mvc.perform(MockMvcRequestBuilders.post("/event/addevent")
+	      			.contentType("application/json")
+	      			.accept(MediaType.APPLICATION_JSON)
+	                  .content(json.getBytes())
+	          )
+	         .andExpect(MockMvcResultMatchers.status().isOk())
+	         .andDo(MockMvcResultHandlers.print());
+
+  }
+    
+	@Test
+    public void getEvent() throws Exception {
+        mvc.perform(MockMvcRequestBuilders.get("/event/getevent/1")
+                    .contentType("text/html")
+                    .accept(MediaType.APPLICATION_JSON)
+            )
+           .andExpect(MockMvcResultMatchers.status().isOk())
+           .andExpect(MockMvcResultMatchers.jsonPath("$.eventId").value(1))
+           .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(1))
+           .andExpect(MockMvcResultMatchers.jsonPath("$.eventTitle").value("TitileTest1"))
+           .andExpect(MockMvcResultMatchers.jsonPath("$.note").value("NoteTest1"))
+           .andExpect(MockMvcResultMatchers.jsonPath("$.priority").value(3))
+           .andExpect(MockMvcResultMatchers.jsonPath("$.startTime").value("2020-03-05 00:00:00"))
+           .andExpect(MockMvcResultMatchers.jsonPath("$.endTime").value("2020-03-06 00:00:00"))
+           .andDo(MockMvcResultHandlers.print());
+
+    }
+	
+//	@Test
+//    public void updateEvent() throws Exception {
+//		String json="{\"eventId\":6,\"userId\":3,\"eventTitle\":\"updateTest\",\"note\":\"updateTestNote\",\"priority\":3}";
+//        mvc.perform(MockMvcRequestBuilders.put("/event/updateEvent")
+//    			.contentType("application/json")
+//    			.accept(MediaType.APPLICATION_JSON)
+//                .content(json.getBytes())
+//            )
+//           .andExpect(MockMvcResultMatchers.status().isOk())
+//           .andDo(MockMvcResultHandlers.print());
+//
+//    }
+//	
+
+//	
+//	@Test
+//	@Transactional
+//	public void deleteEvent() throws Exception {
+//        mvc.perform(MockMvcRequestBuilders.delete("/event/deleteEvent/4")
+//                .contentType("text/html")
+//                .accept(MediaType.APPLICATION_JSON)
+//        )
+//       .andExpect(MockMvcResultMatchers.status().isOk())
+//       .andDo(MockMvcResultHandlers.print());
+//		
+//	}
+
+}

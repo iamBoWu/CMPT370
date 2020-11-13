@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>home</title>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" ></script>
+	
+	<script th:inline="javascript">
+	    var UserId = [[${session.UserId}]];
+	    
+	    function showEvent() {
+			$.ajax({
+		type: 'GET',
+		url: '/calender/showAllevent/' + UserId, 
+		error:function(){alert('error!')},
+		success: function(obj){	
+			var i;
+			for (i of obj){
+				var all = " ";
+				var h = "<p> Title: " + i.eventTitle + " note: " + i.note + " priority: " + i.priority + " startTime: " + i.startTime + " endTime: " + i.endTime + "</p>";
+				var button1 = '<button class = "event' + i.eventId+ '"' + ' type="button" onclick="check(' + i.eventId + ')" > check </button>';
+				var button2 = '<button class = "event' + i.eventId + '"' + ' type="button" onclick="deleteEvent('+ i.eventId + ')" > delete </button>';
+				all = h +button1 + button2;
+				$("#calender").append(all);
+			}
+		}	
+		});
+		}
+	    
+	    function check(id){
+	    	location.href = "/calender/eventcheck/" + id;
+	    }
+	    
+	    function deleteEvent(id) {
+	    	
+			$.ajax({
+				type: 'DELETE',
+				url: '/calender/deleteEvent/' + id, 
+				error:function(){alert('error!')},
+				success: function(obj){	
+					alert("delete success!");
+					location.href = "/calender/";
+				}	
+				});
+		}
+	        
+	</script>
+    
+	
+</head>
+
+<body onload = "showEvent()">
+	<h1>Welcome! </h1>
+	<h1 th:text="${session.UserName}">0</h1>
+	<h1 id="calender">This is Calender page</h1>
+	
+    <div>
+            <h3>
+                  <a th:href="@{/calender/addevent}">addevent</a>
+            </h3>
+    </div>
+    
+</body>
+</html>

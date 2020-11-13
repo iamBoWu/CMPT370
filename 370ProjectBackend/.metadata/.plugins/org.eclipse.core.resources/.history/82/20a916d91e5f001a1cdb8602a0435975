@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>checkEvent</title>
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" ></script>
+    
+    	<script th:inline="javascript">
+	    var eventid = [[${session.EventId}]];
+	    console.log(eventid);
+	    
+	    function getEvent() {
+			$.ajax({
+		type: 'GET',
+		url: '/event/getevent/' + eventid, 
+		error:function(){alert('error!')},
+		success: function(obj){	
+				var all = " ";
+				var h1 = "<p> Owener: " + obj.userId + "</p>";
+				var h2 = "<p> Title: " + obj.eventTitle + "</p>";
+				var h3 = "<p> Note: " + obj.note + "</p>";
+				var h4 = "<p> Priority: " + obj.priority + "</p>";
+				var h5 = "<p> Priority: " + obj.priority + "</p>";
+				var h5 = "<p> Priority: " + obj.priority + "</p>";
+				var button1 = '<button class = "event' + obj.eventId + '"' + ' type="button" onclick="deleteEvent('+ obj.eventId + ')" > delete </button>';
+				var button2 = '<button class = "event' + obj.eventId + '"' + ' type="button" onclick="updateEvent('+ obj.eventId + ')" > update </button>';
+				all = h1+h2+h3+h4+h5+h6+button2+button1;
+				$("#event").append(all);
+			
+		}	
+		});
+		}
+	    
+	    function deleteEvent(id) {
+	    	
+			$.ajax({
+				type: 'DELETE',
+				url: '/calender/deleteEvent/' + id, 
+				error:function(){alert('error!')},
+				success: function(obj){	
+					alert("delete success!");
+					location.href = "/calender/";
+				}	
+				});
+		}
+	    
+	    function updateEvent(id) {
+	    	location.href = "/event/update";
+		}
+	    
+	    function back(){
+	    	location.href = "/calender/";
+	    }
+	    
+	    </script>
+	    
+	    
+</head>
+<body onload = "getEvent()">
+		<h1 id="event">This is event page</h1>
+		<button onclick="back()" class="button"> Back</button>
+</body>
+</html>

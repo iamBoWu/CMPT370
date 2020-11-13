@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sms.boot.mapper.LoginMapper">
+
+	<select id= "queryUser"  parameterType="com.sms.boot.pojo.User" resultType="com.sms.boot.pojo.User" > 
+		select * FROM user WHERE user_name=#{u.userName} AND password=#{u.passward}  AND is_del=0
+	</select>
+</mapper>

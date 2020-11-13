@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sms.boot.mapper.EventMapper">
+	
+	<insert id="addEvent" parameterType="com.sms.boot.pojo.Event">
+		insert into event(user_id, event_title, note, priority, start_time, end_time) VALUES (#{e.userId}, #{e.eventTitle}, #{e.note}, #{e.priority}, #{e.startTime}, #{e.endTime})
+	</insert>
+	
+	<select id= "queryEvent" parameterType="int" resultType="com.sms.boot.pojo.Event" > 
+		select * FROM event WHERE event_id=#{id}  AND is_del=0
+	</select>
+	
+	<update id="updateEvent"  parameterType="com.sms.boot.pojo.Event" >
+		UPDATE event SET event_title=#{e.eventTitle}, note=#{e.note}, priority=#{e.priority} WHERE event_id=#{e.eventId}
+	</update>
+</mapper>

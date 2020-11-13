@@ -1,0 +1,49 @@
+package com.sms.boot.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.sms.boot.pojo.Event;
+import com.sms.boot.service.EventService;
+
+@Controller
+@RequestMapping(value = "/event")
+public class EventController {
+
+	@Autowired
+	EventService eventservice;
+	
+	@PostMapping("/addevent")
+	public void addEvnet(@RequestBody List<Event> event) {
+		System.out.println(event);
+		//eventservice.addEvent(event);
+	}
+	
+	@ResponseBody
+	@GetMapping("/getevent/{id}")
+	public Event getEvent(@PathVariable("id") Integer eventId) {
+		Event event = eventservice.getEvent(eventId);
+		return event;
+	}
+	
+	@GetMapping("/update")
+	public String updateEvent(){
+		return "updateevent";
+	}
+	
+	@PutMapping("/updateEvent")
+	public String updateEvent(Event event) {
+		eventservice.updateEvent(event);
+		return "checkevent";
+	}
+	
+}
